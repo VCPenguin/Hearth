@@ -18,7 +18,7 @@ public class EntityParent : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        CollisionClip = SFXController.instance.CollisionSound;
+        //CollisionClip = SFXController.instance.CollisionSound;
 	}
 	
 	// Update is called once per frame
@@ -52,7 +52,7 @@ public class EntityParent : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        SFXController.instance.SpawnAudioBomb(this.transform.position, CollisionClip, 0.1f);
+        //SFXController.instance.SpawnAudioBomb(this.transform.position, CollisionClip, 0.1f);
 
         //Debug.Log("Basic collision");
         //Debug.Log(collision.transform.gameObject.name);
