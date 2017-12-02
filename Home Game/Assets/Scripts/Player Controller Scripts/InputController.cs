@@ -53,7 +53,8 @@ public class InputController : MonoBehaviour
     {
         get
         {
-            return Input.GetMouseButtonDown(1);
+            return false;
+            //return Input.GetMouseButtonDown(1);
         }
     }
 
@@ -61,7 +62,8 @@ public class InputController : MonoBehaviour
     {
         get
         {
-            return Input.GetKeyDown(KeyCode.Alpha2);
+            return false;
+            //return Input.GetKeyDown(KeyCode.Alpha2);
         }
     }
 

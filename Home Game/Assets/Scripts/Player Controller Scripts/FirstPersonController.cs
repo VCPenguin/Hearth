@@ -19,6 +19,9 @@ public class FirstPersonController : MonoBehaviour
     public float moveSpeed;
     public float jumpForce;
 
+    public bool onGround;
+    public float groundDistance;
+
     InputController inputController;
 
     public float StepDistance;
@@ -39,7 +42,7 @@ public class FirstPersonController : MonoBehaviour
 	void Update ()
     {
 
-        
+
 
         //Horizontal Camera Rotation
         HorizontalTurntable.transform.localRotation *= Quaternion.Euler(0, inputController.xLookInput * xCameraSensitivity * Time.deltaTime, 0);
@@ -57,17 +60,13 @@ public class FirstPersonController : MonoBehaviour
             VerticleLookTracker += inputController.yLookInput * yCameraSensitivity * Time.deltaTime * (inputController.invertY ? -1 : 1);
         }
 
-        
-
-
-
         //Calculate Movement Vector
         Vector3 movementVector = (HorizontalTurntable.transform.forward * inputController.yMoveInput) + (HorizontalTurntable.transform.right * inputController.xMoveInput);
         //Normalizing the movement vector and apply to object
         transform.position += movementVector.normalized * moveSpeed * Time.deltaTime;
 
         //Character Jumping
-        if (inputController.jumpButtomDown)
+        if (inputController.jumpButtomDown && onGround)
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
         //Character Footsteps
@@ -81,6 +80,19 @@ public class FirstPersonController : MonoBehaviour
                 StepTracker = 0;
                 //play noise reset tracker;
             }
+        }
+
+        //Ground checking
+        Ray downRay = new Ray(HorizontalTurntable.transform.position, HorizontalTurntable.gameObject.transform.up * -1);
+        RaycastHit hit = new RaycastHit();
+
+        if(Physics.Raycast(downRay, out hit, groundDistance))
+        {
+            onGround = true;
+        }
+        else
+        {
+            onGround = false;
         }
     }
 
