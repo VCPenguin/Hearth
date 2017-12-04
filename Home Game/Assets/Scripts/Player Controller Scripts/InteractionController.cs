@@ -46,7 +46,7 @@ public class InteractionController : MonoBehaviour
     void CheckInput()
     {
         //Grab and Drop Input
-        if(inputController.grabButtonDown)
+        if(inputController.grabButtonDown > 0)
         {
             //If you dont have an object, try and grab one
             if (grabbedObject == null)
@@ -162,6 +162,14 @@ public class InteractionController : MonoBehaviour
 
             //Adjust final bounds
         }
+
+
+        Debug.Log(DetermineParentObjectBounds(grabbedObject));
+    }
+
+    Bounds DetermineParentObjectBounds(GameObject _parent)
+    {
+        return _parent.transform.GetChild(0).gameObject.GetComponent<MeshCollider>().bounds;
     }
 
     public void TryDrop()
