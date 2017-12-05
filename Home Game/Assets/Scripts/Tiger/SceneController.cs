@@ -19,9 +19,16 @@ namespace UnityStandardAssets.ImageEffects
         public GameObject Cam;
         public GameObject Menu;
         public GameObject CreditsGroup;
+        public GameObject ControlsGroup;
 
         [Header("Game Scene Items")]
         public GameObject PauseMenu;
+
+        public InputController inputController;
+
+        public bool Paused;
+
+        float tempPlayerMovespeed;
 
         // Use this for initialization
         void Start()
@@ -35,12 +42,119 @@ namespace UnityStandardAssets.ImageEffects
         // Update is called once per frame
         void Update()
         {
-            MainMenu();
-
-            if(Input.GetKeyDown(KeyCode.Escape))
+            //If you are in the game
+            if (PlayerController.instance == null)
             {
-                Pause();
+                MainMenu();
+
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Pause();
+                }
+
+                if (inputController.aButtonDown == 1)
+                {
+                    NewGame();
+                }
+
+                if (inputController.bButtonDown == 1)
+                {
+                    //If credits is open
+                    if (CreditsGroup.activeSelf == true)
+                    {
+                        CloseCredits();
+                    }
+                    //If controls are open
+                    else if (ControlsGroup.activeSelf == true)
+                    {
+                        CloseControls();
+                    }
+                    //If nothing is open
+                    else
+                    {
+                        QuitGame();
+                    }
+                }
+
+                if (inputController.xButtonDown == 1)
+                {
+                    //If credits is open
+                    if (CreditsGroup.activeSelf == false && ControlsGroup.activeSelf == false)
+                    {
+                        Credits();
+                    }
+                }
+
+                if (inputController.yButtonDown == 1)
+                {
+                    //If controls is open
+                    if (CreditsGroup.activeSelf == false && ControlsGroup.activeSelf == false)
+                    {
+                        Controls();
+                    }
+                }
+
+                if (inputController.aButtonDown == 1)
+                {
+                    //If controls is open
+                    if (CreditsGroup.activeSelf == false && ControlsGroup.activeSelf == false)
+                    {
+                        NewGame();
+                    }
+                }
+
+                
             }
+            else
+            {
+                if (inputController.startButtonDown == 1)
+                {
+
+                    if (Paused == false)
+                    {
+                        Pause();
+                    }
+                    else
+                    {
+                        ContinueGame();
+                    }
+
+                }
+
+                if (inputController.bButtonDown == 1)
+                {
+
+                    if (Paused == false)
+                    {
+                        //Pause();
+                    }
+                    else
+                    {
+                        QuitMenu();
+                    }
+
+                }
+
+                if (inputController.yButtonDown == 1)
+                {
+
+                    if (Paused == false)
+                    {
+                        //Pause();
+                    }
+                    else
+                    {
+                        PlayerController.instance.inputController.invertY = !PlayerController.instance.inputController.invertY;
+                    }
+
+                }
+
+
+            }
+
+
+
+
         }
 
         public void MainMenu()
@@ -79,12 +193,14 @@ namespace UnityStandardAssets.ImageEffects
 
         public void Controls()
         {
-
+            ControlsGroup.SetActive(true);
+            Menu.SetActive(false);
         }
 
         public void CloseControls()
         {
-
+            ControlsGroup.SetActive(false);
+            Menu.SetActive(true);
         }
 
         public void NewGame()
@@ -94,12 +210,14 @@ namespace UnityStandardAssets.ImageEffects
 
         public void Pause()
         {
+            Paused = true;
             PauseMenu.SetActive(true);
-            Time.timeScale = 0;
+            Time.timeScale = 0.5f;
         }
 
         public void ContinueGame()
         {
+            Paused = false;
             Time.timeScale = 1;
             PauseMenu.SetActive(false);
         }

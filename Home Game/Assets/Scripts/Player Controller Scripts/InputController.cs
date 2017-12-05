@@ -6,7 +6,11 @@ public class InputController : MonoBehaviour
 {
     public bool invertY;
 
-    float previousFire;
+    float previousXButton;
+    float previousYButton;
+    float previousAButton;
+    float previousBButton;
+    float previousStartButton;
     //float previousGrab;
 
     public float xLookInput
@@ -44,11 +48,71 @@ public class InputController : MonoBehaviour
             return Input.GetAxis("Jump");
         }
     }
-    public float grabButtonDown
+    public float xButtonDown
     {
         get
         {
-            if(previousFire <= 0 && Input.GetAxis("Fire1") > 0)
+            if(previousXButton <= 0 && Input.GetAxis("XButton") > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
+    public float yButtonDown
+    {
+        get
+        {
+            if (previousYButton <= 0 && Input.GetAxis("YButton") > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
+    public float aButtonDown
+    {
+        get
+        {
+            if (previousAButton <= 0 && Input.GetAxis("AButton") > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
+    public float bButtonDown
+    {
+        get
+        {
+            if (previousBButton <= 0 && Input.GetAxis("BButton") > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
+    public float startButtonDown
+    {
+        get
+        {
+            if (previousStartButton <= 0 && Input.GetAxis("StartButton") > 0)
             {
                 return 1;
             }
@@ -92,6 +156,10 @@ public class InputController : MonoBehaviour
 
     private void LateUpdate()
     {
-        previousFire =  Input.GetAxis("Fire1");
+        previousXButton =  Input.GetAxis("XButton");
+        previousYButton = Input.GetAxis("YButton");
+        previousAButton = Input.GetAxis("AButton");
+        previousBButton = Input.GetAxis("BButton");
+        previousStartButton = Input.GetAxis("StartButton");
     }
 }

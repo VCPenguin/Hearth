@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.ImageEffects;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public InteractionController interactionController;
     public FirstPersonController firstPersonController;
     public DayAndNightControl dayNightControl;
+    public SceneController sceneController;
 
     public Campfire campFire;
 

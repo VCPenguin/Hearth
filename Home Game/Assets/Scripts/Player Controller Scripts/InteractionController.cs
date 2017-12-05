@@ -46,7 +46,7 @@ public class InteractionController : MonoBehaviour
     void CheckInput()
     {
         //Grab and Drop Input
-        if(inputController.grabButtonDown > 0)
+        if(inputController.xButtonDown > 0)
         {
             //If you dont have an object, try and grab one
             if (grabbedObject == null)

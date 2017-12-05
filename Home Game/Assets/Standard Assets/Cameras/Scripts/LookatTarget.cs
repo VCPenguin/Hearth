@@ -29,6 +29,7 @@ namespace UnityStandardAssets.Cameras
 
         private bool MenuCameraMove = false;
 
+        
 
         // Use this for initialization
         protected override void Start()
@@ -71,6 +72,11 @@ namespace UnityStandardAssets.Cameras
         public void Update()
         {
             if(Input.anyKey)
+            {
+                MenuCameraMove = true;
+            }
+
+            if(Input.GetAxis("StartButton") == 1)
             {
                 MenuCameraMove = true;
             }
