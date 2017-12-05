@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
 
     public AudioClip EnemyExplosionClip;
 
+    public float fireRangeMultiplier;
+    public float fireDistanceTolerance;
+
     private void Awake()
     {
         player = PlayerController.instance;
@@ -38,7 +41,17 @@ public class Enemy : MonoBehaviour
 
     void UpdateMovement()
     {
-        transform.Translate((player.transform.position - gameObject.transform.position).normalized * Time.deltaTime * speed);
+        if((player.campFire.transform.position - transform.position).magnitude > (player.campFire.fireLight.range * fireRangeMultiplier))
+        {
+            transform.position += ((player.transform.position - gameObject.transform.position).normalized * Time.deltaTime * speed);
+        }
+
+        if((player.campFire.transform.position - transform.position).magnitude < (player.campFire.fireLight.range * fireRangeMultiplier) - fireDistanceTolerance)
+        {
+            Die();
+        }
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,8 +69,14 @@ public class Enemy : MonoBehaviour
 
             SFXController.instance.SpawnAudioBomb(this.transform.position, EnemyExplosionClip, 1);
 
-            Destroy(this.gameObject);
+            Die();
+            
         }
+    }
+
+    public void Die()
+    {
+        Destroy(this.gameObject);
     }
 
 }

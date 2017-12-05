@@ -20,6 +20,8 @@ public class DayAndNightControl : MonoBehaviour {
 
     bool WipedAllGlue = false;
 
+    
+
 	// Use this for initialization
 	void Start () {
 		lightIntensity = directionalLight.intensity; //what's the current intensity of the light
@@ -37,65 +39,79 @@ public class DayAndNightControl : MonoBehaviour {
 			currentDay++; //make the day counter go up
 		}
 
-        //wipe all the glue at midnight
-        if(currentTime > 0.9f)
-        {
-            if(WipedAllGlue == false)
-            {
-                Debug.Log("wipedGlue");
-                PlayerController.instance.interactionController.WipeAllStructures();
-                WipedAllGlue = true;
-            }
-        }
+        ////wipe all the glue at midnight
+        //if(currentTime > 0.9f)
+        //{
+        //    if(WipedAllGlue == false)
+        //    {
+        //        Debug.Log("wipedGlue");
+        //        PlayerController.instance.interactionController.WipeAllStructures();
+        //        WipedAllGlue = true;
+        //    }
+        //}
 
-        if(currentTime > 0.1 && currentTime < 0.9f)
-        {
-            if(WipedAllGlue == true)
-            {
-                Debug.Log("reset Glue");
-                WipedAllGlue = false;
-            }
-        }
+        //if(currentTime > 0.1 && currentTime < 0.9f)
+        //{
+        //    if(WipedAllGlue == true)
+        //    {
+        //        Debug.Log("reset Glue");
+        //        WipedAllGlue = false;
+        //    }
+        //}
 
-        if(currentTime > 0.25f && BGMController.instance.currentTrack == BGMController.CurrentTrack.night)
+        if (currentTime > 0.25f && BGMController.instance.currentTrack == BGMController.CurrentTrack.night)
         {
             BGMController.instance.ChangeMusic(0);
         }
 
-        if(currentTime > 0.75f && BGMController.instance.currentTrack == BGMController.CurrentTrack.day)
+        if (currentTime > 0.75f && BGMController.instance.currentTrack == BGMController.CurrentTrack.day)
         {
             BGMController.instance.ChangeMusic(1);
         }
-	}
+    }
 
 	void UpdateLight()
 	{
-		StarDome.transform.Rotate (new Vector3 (0, 0, 2f * Time.deltaTime));
+        //StarDome.transform.Rotate (new Vector3 (0, 0, 2f * Time.deltaTime));
 
-		directionalLight.transform.localRotation = Quaternion.Euler ((currentTime * 360f) - 90, 170, 0);
-		//^^ we rotate the sun 360 degrees around the x axis, or one full rotation times the current time variable. we subtract 90 from this to make it go up
-		//in increments of 0.25.
+        //directionalLight.transform.localRotation = Quaternion.Euler ((currentTime * 360f) - 90, 170, 0);
 
-		//the 170 is where the sun will sit on the horizon line. if it were at 180, or completely flat, it would be hard to see. Tweak this value to what you find comfortable.
+        //^^ we rotate the sun 360 degrees around the x axis, or one full rotation times the current time variable. we subtract 90 from this to make it go up
+        //in increments of 0.25.
 
-		float intensityMultiplier = 1;
+        //the 170 is where the sun will sit on the horizon line. if it were at 180, or completely flat, it would be hard to see. Tweak this value to what you find comfortable.
 
-		if (currentTime <= 0.23f || currentTime >= 0.75f) 
-		{
-			intensityMultiplier = 0; //when the sun is below the horizon, or setting, the intensity needs to be 0 or else it'll look weird
-			starMat.color = new Color(1,1,1,Mathf.Lerp(1,0,Time.deltaTime));
-		}
-		else if (currentTime <= 0.25f) 
-		{
-			intensityMultiplier = Mathf.Clamp01((currentTime - 0.23f) * (1 / 0.02f));
-			starMat.color = new Color(1,1,1,Mathf.Lerp(0,1,Time.deltaTime));
-		}
-		else if (currentTime <= 0.73f) 
-		{
-			intensityMultiplier = Mathf.Clamp01(1 - ((currentTime - 0.73f) * (1 / 0.02f)));
-		}
+        //float intensityMultiplier = 1;
 
-		directionalLight.intensity = lightIntensity * intensityMultiplier;
+        //if (currentTime <= 0.23f || currentTime >= 0.75f) 
+        //{
+        //	intensityMultiplier = 0; //when the sun is below the horizon, or setting, the intensity needs to be 0 or else it'll look weird
+        //	starMat.color = new Color(1,1,1,Mathf.Lerp(1,0,Time.deltaTime));
+        //}
+        //else if (currentTime <= 0.25f) 
+        //{
+        //	intensityMultiplier = Mathf.Clamp01((currentTime - 0.23f) * (1 / 0.02f));
+        //	starMat.color = new Color(1,1,1,Mathf.Lerp(0,1,Time.deltaTime));
+        //}
+        //else if (currentTime <= 0.73f) 
+        //{
+        //	intensityMultiplier = Mathf.Clamp01(1 - ((currentTime - 0.73f) * (1 / 0.02f)));
+        //}
+
+        //Morning
+        if(currentTime < 0.5f)
+        {
+            directionalLight.color = Color.Lerp(Color.black,Color.white, currentTime * 2);
+        }
+        //Night
+        else
+        {
+            directionalLight.color = Color.Lerp(Color.white, Color.black, (currentTime - 0.5f) * 2);
+        }
+       
+
+        
+		//directionalLight.intensity = lightIntensity * intensityMultiplier;
 	}
 
 	void CheckTimeOfDay ()

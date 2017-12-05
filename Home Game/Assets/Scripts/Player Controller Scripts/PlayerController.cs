@@ -17,13 +17,16 @@ public class PlayerController : MonoBehaviour
 
     public bool inCave;
 
-
+    // -80 -2.2
 
     //Module Controller Objects
     public InputController inputController;
     public InteractionController interactionController;
     public FirstPersonController firstPersonController;
     public DayAndNightControl dayNightControl;
+
+    public Campfire campFire;
+
     #endregion
 
     private void Awake()
@@ -50,6 +53,8 @@ public class PlayerController : MonoBehaviour
         if (strengthBoostTimer > 0)
             UpdateStrengthBoost();
     }
+
+    
 
     public void BoostStrength(float _boostAmount, float _boostTime)
     {

@@ -37,6 +37,7 @@ public class FlickeringLight : MonoBehaviour {
 
     private float deltaSum = 0;
 
+    //public 
 
     void Start ()
     {

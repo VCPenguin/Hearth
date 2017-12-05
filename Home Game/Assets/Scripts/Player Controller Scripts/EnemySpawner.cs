@@ -35,19 +35,17 @@ public class EnemySpawner : MonoBehaviour
     {
         if (PlayerController.instance.dayNightControl.currentTime < 0.25f || PlayerController.instance.dayNightControl.currentTime > 0.75f)
         {
-            if(PlayerController.instance.inCave == false)
+            if (spawnTimer > 0)
             {
-                if (spawnTimer > 0)
-                {
-                    spawnTimer -= Time.deltaTime;
+                spawnTimer -= Time.deltaTime;
 
-                    if (spawnTimer < 0)
-                    {
-                        SpawnEnemy();
-                        spawnTimer = Random.Range(spawnIntervalMin, spawnIntervalMax);
-                    }
+                if (spawnTimer < 0)
+                {
+                    SpawnEnemy();
+                    spawnTimer = Random.Range(spawnIntervalMin, spawnIntervalMax);
                 }
             }
+
         }
     }
 
@@ -55,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject newEnemy = Instantiate(EnemyPrefab);
 
-        //Debug.Log(this.gameObject.transform.position);
+        Debug.Log("enemy Spawned");
         newEnemy.transform.position = this.gameObject.transform.position - (PlayerController.instance.firstPersonController.HorizontalTurntable.transform.forward * (Random.Range(minDistance, maxDistance)));
 
         Vector3 enemyPositionOffset = Vector3.zero;

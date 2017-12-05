@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SFXController : MonoBehaviour {
+public class SFXController : MonoBehaviour
+{
 
     public static SFXController instance;
     public GameObject AudioBombPrefab;
@@ -15,12 +16,14 @@ public class SFXController : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 

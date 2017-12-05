@@ -8,6 +8,19 @@ public class Campfire : MonoBehaviour
     public float currentFireTime;
     public float maxFireTime;
 
+    public GameObject particleSystem;
+
+    public float minFlamePosition;
+    public float maxFlamePosition;
+
+    public Light fireLight;
+
+    public float minLightIntensity;
+    public float maxLightIntensity;
+
+    public float maxLightRange;
+    public float minLightRange;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -30,6 +43,11 @@ public class Campfire : MonoBehaviour
         {
 
         }
+
+        fireLight.range = Mathf.Lerp(fireLight.range, Mathf.Lerp(minLightRange, maxLightRange, currentFireTime / maxFireTime), 0.05f);
+        fireLight.intensity = Mathf.Lerp(fireLight.intensity,  Mathf.Lerp(minLightIntensity,  maxLightIntensity, currentFireTime / maxFireTime), 0.05f);
+
+        particleSystem.transform.localPosition = new Vector3(particleSystem.transform.position.x, Mathf.Lerp(maxFlamePosition,  minFlamePosition, currentFireTime/maxFireTime), particleSystem.transform.position.z);
     }
 
     private void OnCollisionEnter(Collision collision)
