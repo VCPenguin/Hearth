@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.ImageEffects;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class PlayerController : MonoBehaviour
     public float strengthBoost;
 
     public bool inCave;
+
+    public float maxHealth;
+    public float health;
+
+    public Image PlayerDamageDisplay;
 
     // -80 -2.2
 
@@ -44,6 +50,10 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        
+
+        health = maxHealth;
+
         //Setting strength to base default
         strength = baseStrength;
     }
@@ -54,9 +64,28 @@ public class PlayerController : MonoBehaviour
         //If you have a strength boost, run the update code
         if (strengthBoostTimer > 0)
             UpdateStrengthBoost();
+
+        //Adjust player health visual
+        Color tempColor = PlayerDamageDisplay.color;
+        tempColor.a = Mathf.Lerp(1, 0, health / maxHealth);
+        PlayerDamageDisplay.color = tempColor;
     }
 
     
+    public void TakeDamage(float _damage)
+    {
+        health -= _damage;
+
+        if(health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        sceneController.QuitMenu();
+    }
 
     public void BoostStrength(float _boostAmount, float _boostTime)
     {

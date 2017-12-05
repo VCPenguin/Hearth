@@ -69,6 +69,8 @@ public class Enemy : MonoBehaviour
 
             SFXController.instance.SpawnAudioBomb(this.transform.position, EnemyExplosionClip, 1);
 
+            player.TakeDamage(10);
+
             Die();
             
         }
