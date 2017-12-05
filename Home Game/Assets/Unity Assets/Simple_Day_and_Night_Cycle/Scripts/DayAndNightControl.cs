@@ -20,7 +20,11 @@ public class DayAndNightControl : MonoBehaviour {
 
     bool WipedAllGlue = false;
 
-    
+    public ReflectionProbe colourFixer;
+
+    public Gradient dayDirectionalLightColour;
+    public Gradient colourFixerLightColour;
+    public Gradient skyboxColour;
 
 	// Use this for initialization
 	void Start () {
@@ -72,47 +76,42 @@ public class DayAndNightControl : MonoBehaviour {
 
 	void UpdateLight()
 	{
-        //StarDome.transform.Rotate (new Vector3 (0, 0, 2f * Time.deltaTime));
 
-        //directionalLight.transform.localRotation = Quaternion.Euler ((currentTime * 360f) - 90, 170, 0);
 
-        //^^ we rotate the sun 360 degrees around the x axis, or one full rotation times the current time variable. we subtract 90 from this to make it go up
-        //in increments of 0.25.
-
-        //the 170 is where the sun will sit on the horizon line. if it were at 180, or completely flat, it would be hard to see. Tweak this value to what you find comfortable.
-
-        //float intensityMultiplier = 1;
-
-        //if (currentTime <= 0.23f || currentTime >= 0.75f) 
-        //{
-        //	intensityMultiplier = 0; //when the sun is below the horizon, or setting, the intensity needs to be 0 or else it'll look weird
-        //	starMat.color = new Color(1,1,1,Mathf.Lerp(1,0,Time.deltaTime));
-        //}
-        //else if (currentTime <= 0.25f) 
-        //{
-        //	intensityMultiplier = Mathf.Clamp01((currentTime - 0.23f) * (1 / 0.02f));
-        //	starMat.color = new Color(1,1,1,Mathf.Lerp(0,1,Time.deltaTime));
-        //}
-        //else if (currentTime <= 0.73f) 
-        //{
-        //	intensityMultiplier = Mathf.Clamp01(1 - ((currentTime - 0.73f) * (1 / 0.02f)));
-        //}
 
         //Morning
         if(currentTime < 0.5f)
         {
-            directionalLight.color = Color.Lerp(Color.black,Color.white, currentTime * 2);
+            //Directional Light
+            //Intensity
+            directionalLight.intensity = Mathf.Lerp(0, 1, currentTime * 2);
         }
+
+
         //Night
         else
         {
-            directionalLight.color = Color.Lerp(Color.white, Color.black, (currentTime - 0.5f) * 2);
+            //Directional Light
+            //Intensity
+            directionalLight.intensity = Mathf.Lerp(1, 0, (currentTime - 0.5f) * 2);
         }
-       
 
-        
-		//directionalLight.intensity = lightIntensity * intensityMultiplier;
-	}
+
+        //Colour
+        directionalLight.color = dayDirectionalLightColour.Evaluate(currentTime);// Color.Lerp(Color.black,Color.white, );
+
+        //Colour Fixer
+        //Background
+        colourFixer.backgroundColor = colourFixerLightColour.Evaluate(currentTime);
+
+        //Camera
+        //Background
+        Camera.main.backgroundColor = skyboxColour.Evaluate(currentTime);
+
+
+
+        //directionalLight.intensity = lightIntensity * intensityMultiplier;
+    }
 
 	void CheckTimeOfDay ()
 	{
