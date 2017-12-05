@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
 
             other.gameObject.GetComponent<InteractionController>().TryDrop();
 
-            SFXController.instance.SpawnAudioBomb(this.transform.position, EnemyExplosionClip, 1);
+            
 
             player.TakeDamage(10);
 
@@ -78,6 +78,7 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        SFXController.instance.SpawnAudioBomb(this.transform.position, EnemyExplosionClip, 1);
         Destroy(this.gameObject);
     }
 

@@ -77,18 +77,18 @@ public class FirstPersonController : MonoBehaviour
         //if (inputController.jumpButtomDown && onGround)
         //    GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
-        ////Character Footsteps
-        //if(movementVector.magnitude > 0)
-        //{
-        //    StepTracker += Time.deltaTime;
+        //Character Footsteps
+        if (onGround && GetComponent<Rigidbody>().velocity.magnitude >= 1)
+        {
+            StepTracker += Time.deltaTime;
 
-        //    if(StepTracker > StepDistance)
-        //    {
-        //        PlayerController.instance.GetComponent<AudioSource>().Play();
-        //        StepTracker = 0;
-        //        //play noise reset tracker;
-        //    }
-        //}
+            if (StepTracker > StepDistance)
+            {
+                PlayerController.instance.GetComponent<AudioSource>().Play();
+                StepTracker = 0;
+                //play noise reset tracker;
+            }
+        }
 
         ////Ground checking
         //Ray downRay = new Ray(HorizontalTurntable.transform.position, HorizontalTurntable.gameObject.transform.up * -1);

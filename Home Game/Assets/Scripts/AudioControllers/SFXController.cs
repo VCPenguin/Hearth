@@ -9,6 +9,7 @@ public class SFXController : MonoBehaviour
     public GameObject AudioBombPrefab;
 
     public AudioClip CollisionSound;
+    public AudioClip FireWoosh;
 
     private void Awake()
     {

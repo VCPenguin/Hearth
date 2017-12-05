@@ -99,6 +99,7 @@ public class Campfire : MonoBehaviour
                 GameObject childObject = parentObject.transform.GetChild(0).gameObject;
                 if(childObject.GetComponent<Entity>().Burnable)
                 {
+                    SFXController.instance.SpawnAudioBomb(this.transform.position, SFXController.instance.FireWoosh, 0.3f);
                     currentFireTime += childObject.GetComponent<Entity>().BurnTime;
                     Destroy(parentObject);
                 }
