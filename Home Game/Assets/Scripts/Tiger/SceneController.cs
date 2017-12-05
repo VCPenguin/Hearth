@@ -77,9 +77,19 @@ namespace UnityStandardAssets.ImageEffects
             Menu.SetActive(true);
         }
 
+        public void Controls()
+        {
+
+        }
+
+        public void CloseControls()
+        {
+
+        }
+
         public void NewGame()
         {
-            Application.LoadLevel("World");
+            Application.LoadLevel("NewWorld");
         }
 
         public void Pause()
