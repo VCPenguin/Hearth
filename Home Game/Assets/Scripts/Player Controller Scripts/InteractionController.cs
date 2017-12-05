@@ -128,6 +128,9 @@ public class InteractionController : MonoBehaviour
 
     void Sleep()
     {
+
+        playerController.health = playerController.maxHealth;
+
         if(playerController.dayNightControl.currentTime  < 0.25f || playerController.dayNightControl.currentTime  > 0.75f)
         {
             playerController.dayNightControl.currentTime = 0.25f;
