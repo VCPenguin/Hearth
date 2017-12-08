@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     {
         UpdateMovement();
 
-        if(player.dayNightControl.currentTime > 0.25f && player.dayNightControl.currentTime < 0.75f)
+        if(player.dayNightControl.currentTime > player.dayNightControl.dayStart && player.dayNightControl.currentTime < player.dayNightControl.dayEnd)
         {
             Destroy(this.gameObject);
         }

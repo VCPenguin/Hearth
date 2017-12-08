@@ -33,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
 
     void UpdateSpawnTimer()
     {
-        if (PlayerController.instance.dayNightControl.currentTime < 0.25f || PlayerController.instance.dayNightControl.currentTime > 0.75f)
+        if (PlayerController.instance.dayNightControl.currentTime < PlayerController.instance.dayNightControl.dayStart || PlayerController.instance.dayNightControl.currentTime > PlayerController.instance.dayNightControl.dayEnd)
         {
             if (spawnTimer > 0)
             {
