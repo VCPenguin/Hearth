@@ -41,12 +41,24 @@ public class Enemy : MonoBehaviour
 
     void UpdateMovement()
     {
-        if((player.campFire.transform.position - transform.position).magnitude > (player.campFire.fireLight.range * fireRangeMultiplier))
+        //Determine the distance of the enemy from the flame
+        float Distance = (player.campFire.transform.position - transform.position).magnitude;
+
+        //The calculated position delta the emenry may make this frame
+        Vector3 positionChange = ((player.transform.position -gameObject.transform.position).normalized* Time.deltaTime* speed);
+
+        //Next Position
+        Vector3 nextPosition = transform.position + positionChange;
+
+        //If the next step the enemy would take wouldnt put them into the fire, take the step
+        if ((player.campFire.transform.position - nextPosition).magnitude > (player.campFire.fireLight.range * fireRangeMultiplier))
         {
-            transform.position += ((player.transform.position - gameObject.transform.position).normalized * Time.deltaTime * speed);
+            transform.position += positionChange;
         }
 
-        if((player.campFire.transform.position - transform.position).magnitude < (player.campFire.fireLight.range * fireRangeMultiplier) - fireDistanceTolerance)
+
+        //If the enemy is within range of the camp fire, kill it
+        if((player.campFire.transform.position - transform.position).magnitude < (player.campFire.fireLight.range * fireRangeMultiplier))
         {
             Die();
         }

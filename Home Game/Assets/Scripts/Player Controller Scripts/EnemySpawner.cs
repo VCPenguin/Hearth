@@ -51,28 +51,22 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
+        //Spawn enemy object
         GameObject newEnemy = Instantiate(EnemyPrefab);
 
-        Debug.Log("enemy Spawned");
-        newEnemy.transform.position = this.gameObject.transform.position - (PlayerController.instance.firstPersonController.HorizontalTurntable.transform.forward * (Random.Range(minDistance, maxDistance)));
+        //Spawns a certain distance away in any direction direction
+        //Create temp position snapshot
+        Vector3 enemySpawnPosition = PlayerController.instance.transform.position;
 
-        Vector3 enemyPositionOffset = Vector3.zero;
+        //Sets the X and Z positions to ranomly set between min and max value, then randomly inverts it.
+        enemySpawnPosition.x += Random.Range(minDistance, maxDistance) * (Random.Range(0, 2) == 0 ? -1 : 1);
+        enemySpawnPosition.z += Random.Range(minDistance, maxDistance) * (Random.Range(0, 2) == 0 ? -1 : 1);
 
-        enemyPositionOffset.x = Random.Range(minOffset, maxOffset);
-        if(Random.Range((int)0, (int)2) > 0)
-        {
-            enemyPositionOffset.x *= -1;
-        }
-        //enemyPositionOffset.y = Random.Range(minmumDistance, maxDistance);
-        enemyPositionOffset.z = Random.Range(minOffset, maxOffset);
-        if (Random.Range((int)0, (int)2) > 0)
-        {
-            enemyPositionOffset.z *= -1;
-        }
+        Debug.Log("Spawning enemy at: " + enemySpawnPosition);
 
-        newEnemy.transform.position += enemyPositionOffset;
+        //Apply calculated position
+        newEnemy.transform.position = enemySpawnPosition;
 
 
-        Debug.Log("enemy Spawned");
     }
 }

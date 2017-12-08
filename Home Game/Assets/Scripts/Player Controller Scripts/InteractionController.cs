@@ -158,6 +158,9 @@ public class InteractionController : MonoBehaviour
         //Set kinematics
         grabbedObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
 
+        //Put on the raycast Layer
+        grabbedObject.transform.GetChild(0).gameObject.layer = 2;
+
         //Loop through all the children
         for (int i = 0; i < grabbedObject.transform.childCount; i++)
         {
@@ -195,6 +198,9 @@ public class InteractionController : MonoBehaviour
         grabbedObject.GetComponent<Rigidbody>().useGravity = true;
         //Turn off constraints
         grabbedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
+        //Put on the raycast Layer
+        grabbedObject.transform.GetChild(0).gameObject.layer = 0;
 
         //Enable the children colliders
         for (int i = 0; i < grabbedObject.transform.childCount; i++)

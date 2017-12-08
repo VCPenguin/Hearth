@@ -32,6 +32,13 @@ public class FirstPersonController : MonoBehaviour
     float PreviousX;
     float PreviousY;
 
+    public float footStepPitchVariance;
+    public float minPitch;
+    public float maxPitch;
+
+
+    float initialPitch;
+
     private void Awake()
     {
         //Finding input controller on object
@@ -43,6 +50,8 @@ public class FirstPersonController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        //Rememebers the initial pitch
+        initialPitch = PlayerController.instance.GetComponent<AudioSource>().pitch;
         PreviousX = inputController.xMoveInput;
         PreviousY = inputController.yMoveInput;
     }
@@ -84,7 +93,13 @@ public class FirstPersonController : MonoBehaviour
 
             if (StepTracker > StepDistance)
             {
+                PlayerController.instance.GetComponent<AudioSource>().pitch += (Random.Range(-footStepPitchVariance, footStepPitchVariance));
+
+                PlayerController.instance.GetComponent<AudioSource>().pitch = Mathf.Clamp(PlayerController.instance.GetComponent<AudioSource>().pitch, minPitch, maxPitch);
+
+                //Debug.Log
                 PlayerController.instance.GetComponent<AudioSource>().Play();
+
                 StepTracker = 0;
                 //play noise reset tracker;
             }
@@ -164,22 +179,22 @@ public class FirstPersonController : MonoBehaviour
                 if (inputController.yMoveInput <= 0 && PreviousY > 0)
                 {
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                    Debug.Log("Stopped forward");
+                    //Debug.Log("Stopped forward");
                 }
                 else if (inputController.yMoveInput >= 0 && PreviousY < 0)
                 {
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                    Debug.Log("Stopped backward");
+                    //Debug.Log("Stopped backward");
                 }
                 else if (inputController.xMoveInput <= 0 && PreviousX > 0)
                 {
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                    Debug.Log("Stopped right");
+                    //Debug.Log("Stopped right");
                 }
                 else if (inputController.xMoveInput >= 0 && PreviousX < 0)
                 {
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                    Debug.Log("Stopped left");
+                    //Debug.Log("Stopped left");
                 }
             }
 

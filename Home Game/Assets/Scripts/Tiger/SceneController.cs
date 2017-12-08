@@ -145,6 +145,8 @@ namespace UnityStandardAssets.ImageEffects
                     else
                     {
                         PlayerController.instance.inputController.invertY = !PlayerController.instance.inputController.invertY;
+
+                        PlayerPrefs.SetInt("invertY", PlayerController.instance.inputController.invertY == false ? 0 : 1);
                     }
 
                 }

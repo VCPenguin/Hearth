@@ -141,6 +141,18 @@ public class InputController : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        //Checks that the setting has been set before, if not set it
+        if(!PlayerPrefs.HasKey("invertY"))
+        {
+            PlayerPrefs.SetInt("invertY", invertY == false ? 0 : 1);
+        }
+
+        //If the invertY is 0 then set to false else tru, i guess its a way of casting int as bool
+        invertY = PlayerPrefs.GetInt("invertY") == 0 ? false : true;
+    }
+
     // Use this for initialization
     void Start ()
     {
