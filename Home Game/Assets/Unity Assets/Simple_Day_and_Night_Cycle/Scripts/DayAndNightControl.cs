@@ -4,7 +4,11 @@ using UnityEngine;
 using System.Collections;
 
 public class DayAndNightControl : MonoBehaviour {
-	Mesh mesh;
+
+    public float dayStart;
+    public float dayEnd;
+
+    Mesh mesh;
 	public GameObject StarDome;
 	public int currentDay = 0; //day 8287... still stuck in this grass prison... no esacape... no freedom...
 	public string DayState;
@@ -63,12 +67,12 @@ public class DayAndNightControl : MonoBehaviour {
         //    }
         //}
 
-        if (currentTime > 0.25f && BGMController.instance.currentTrack == BGMController.CurrentTrack.night)
+        if (currentTime > dayStart && BGMController.instance.currentTrack == BGMController.CurrentTrack.night)
         {
             BGMController.instance.ChangeMusic(0);
         }
 
-        if (currentTime > 0.75f && BGMController.instance.currentTrack == BGMController.CurrentTrack.day)
+        if (currentTime > dayEnd && BGMController.instance.currentTrack == BGMController.CurrentTrack.day)
         {
             BGMController.instance.ChangeMusic(1);
         }
@@ -115,24 +119,24 @@ public class DayAndNightControl : MonoBehaviour {
 
 	void CheckTimeOfDay ()
 	{
-	if (currentTime < 0.25f || currentTime > 1f) {
+	if (currentTime < dayStart || currentTime > 1f) {
 			DayState = "Midnight";
 		}
-		if (currentTime > 0.25f)
+		if (currentTime > dayStart)
 		{
 			DayState = "Morning";
 
 		}
-		if (currentTime > 0.25f && currentTime < 0.5f)
+		if (currentTime > dayStart && currentTime < 0.5f)
 		{
 			DayState = "Mid Noon";
 		}
-		if (currentTime > 0.5f && currentTime < 0.75f)
+		if (currentTime > 0.5f && currentTime < dayEnd)
 		{
 			DayState = "Evening";
 
 		}
-		if (currentTime > 0.75f && currentTime < 1f)
+		if (currentTime > dayEnd && currentTime < 1f)
 		{
 			DayState = "Night";
 		}

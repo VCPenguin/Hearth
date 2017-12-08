@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour
 
     public Campfire campFire;
 
+    public float sleepDuration;
+
+    public Fader BlackFader;
+
     #endregion
 
     private void Awake()
@@ -109,5 +113,7 @@ public class PlayerController : MonoBehaviour
         
         yield return null;
     }
+
+
 
 }

@@ -54,8 +54,6 @@ public class EntityParent : MonoBehaviour
 
         //SFXController.instance.SpawnAudioBomb(this.transform.position, CollisionClip, 0.1f);
 
-        //Debug.Log("Basic collision");
-        //Debug.Log(collision.transform.gameObject.name);
         //If the collision has at least one child
         if (collision.transform.childCount > 0)
         {

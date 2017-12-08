@@ -5,8 +5,11 @@ using UnityEngine;
 public class Campfire : MonoBehaviour
 {
 
+    
+
     public float currentFireTime;
     public float maxFireTime;
+    public float maxEffectiveTime;
 
     public GameObject particleSystem;
 
@@ -20,6 +23,8 @@ public class Campfire : MonoBehaviour
 
     public float maxLightRange;
     public float minLightRange;
+
+    public float sleepBurnPercentageCost;
 
 	// Use this for initialization
 	void Start ()
@@ -44,8 +49,35 @@ public class Campfire : MonoBehaviour
 
         }
 
-        fireLight.range = Mathf.Lerp(fireLight.range, Mathf.Lerp(minLightRange, maxLightRange, currentFireTime / maxFireTime), 0.05f);
-        fireLight.intensity = Mathf.Lerp(fireLight.intensity,  Mathf.Lerp(minLightIntensity,  maxLightIntensity, currentFireTime / maxFireTime), 0.05f);
+        //Determine range of the light based on fire time
+        fireLight.range = Mathf.Lerp(fireLight.range, Mathf.Lerp(minLightRange, maxLightRange, (currentFireTime * 2) / maxFireTime), 0.05f);
+
+        //Clamp range
+        //If the fireTime is less than 0 make radius 0
+        if(currentFireTime < 0)
+        {
+            fireLight.range = 0;
+        }
+        //If the fireTime is greater than maxEffectiveTime make radius max
+        if(currentFireTime > maxEffectiveTime)
+        {
+            fireLight.range = maxLightRange;
+        }
+
+        //Determine intensity of the light based on fire time
+        fireLight.intensity = Mathf.Lerp(fireLight.intensity,  Mathf.Lerp(minLightIntensity,  maxLightIntensity, (currentFireTime * 2) / maxFireTime), 0.05f);
+
+        //Clamp intensity
+        //If the fireTime is less than 0 make the intensity 0
+        if (currentFireTime < 0)
+        {
+            fireLight.intensity = 0;
+        }
+        //If the fireTime is greater than maxEffectiveTime make intensity max
+        if (currentFireTime > maxEffectiveTime)
+        {
+            fireLight.intensity = maxLightIntensity;
+        }
 
         particleSystem.transform.localPosition = new Vector3(particleSystem.transform.position.x, Mathf.Lerp(maxFlamePosition,  minFlamePosition, currentFireTime/maxFireTime), particleSystem.transform.position.z);
     }
