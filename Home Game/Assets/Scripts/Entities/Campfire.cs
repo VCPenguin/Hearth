@@ -24,6 +24,8 @@ public class Campfire : MonoBehaviour
     public float maxLightRange;
     public float minLightRange;
 
+    public float sleepBurnPercentageCost;
+
 	// Use this for initialization
 	void Start ()
     {

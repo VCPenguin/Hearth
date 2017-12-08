@@ -128,16 +128,52 @@ public class InteractionController : MonoBehaviour
 
     void Sleep()
     {
+        //Checks if the character can sleep
 
-        playerController.health = playerController.maxHealth;
-
-        if(playerController.dayNightControl.currentTime  < 0.25f || playerController.dayNightControl.currentTime  > 0.75f)
+        //if its the right time of day
+        if(playerController.dayNightControl.currentTime < playerController.dayNightControl.dayStart || playerController.dayNightControl.currentTime > playerController.dayNightControl.dayEnd)
         {
-            playerController.dayNightControl.currentTime = 0.25f;
-            Debug.Log("Sleep");
+            //If your fire is burning enough
+            if (playerController.campFire.currentFireTime > playerController.campFire.maxEffectiveTime)
+            {
+                
+
+                StartCoroutine(SleepFade(playerController.sleepDuration));
+                
+            }
+            else
+            {
+                Debug.Log("Not enough fire");
+            }
+        }
+        else
+        {
+            Debug.Log("Not night time");
         }
         
+
+        
+        
     }
+
+    IEnumerator SleepFade(float fadeDuration)
+    {
+        playerController.BlackFader.AlphaTarget = 1;
+
+        for (float i = 0; i < fadeDuration; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+
+        playerController.health = playerController.maxHealth;
+        playerController.dayNightControl.currentTime = playerController.dayNightControl.dayStart;
+        playerController.campFire.currentFireTime -= playerController.campFire.maxFireTime * playerController.campFire.sleepBurnPercentageCost;
+        Debug.Log("Sleep");
+
+        playerController.BlackFader.AlphaTarget = 0;
+    }
+
+
 
     void GrabObject(GameObject _grabbedObject)
     {
