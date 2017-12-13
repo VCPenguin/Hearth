@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        sceneController.QuitMenu();
+        sceneController.ActivateDeadMenu();
     }
 
     public void BoostStrength(float _boostAmount, float _boostTime)

@@ -123,7 +123,7 @@ public class FirstPersonController : MonoBehaviour
     void FixedUpdate()
     {
 
-        if(PlayerController.instance.sceneController.Paused == false)
+        if(PlayerController.instance.sceneController.Paused == false && PlayerController.instance.sceneController.Dead == false)
         {
             //Horizontal Camera Rotation
             HorizontalTurntable.transform.localRotation *= Quaternion.Euler(0, inputController.xLookInput * xCameraSensitivity, 0);

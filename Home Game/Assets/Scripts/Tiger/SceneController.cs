@@ -23,10 +23,12 @@ namespace UnityStandardAssets.ImageEffects
 
         [Header("Game Scene Items")]
         public GameObject PauseMenu;
+        public GameObject DeathMenu;
 
         public InputController inputController;
 
         public bool Paused;
+        public bool Dead;
 
         float tempPlayerMovespeed;
 
@@ -110,7 +112,11 @@ namespace UnityStandardAssets.ImageEffects
                 if (inputController.startButtonDown == 1)
                 {
 
-                    if (Paused == false)
+                    if (Dead)
+                    {
+                        QuitMenu();
+                    }
+                    else if (Paused == false)
                     {
                         Pause();
                     }
@@ -148,15 +154,8 @@ namespace UnityStandardAssets.ImageEffects
 
                         PlayerPrefs.SetInt("invertY", PlayerController.instance.inputController.invertY == false ? 0 : 1);
                     }
-
                 }
-
-
             }
-
-
-
-
         }
 
         public void MainMenu()
@@ -224,10 +223,22 @@ namespace UnityStandardAssets.ImageEffects
             PauseMenu.SetActive(false);
         }
 
+        public void ActivateDeadMenu()
+        {
+            Dead = true;
+            Time.timeScale = 0.1f;
+            DeathMenu.SetActive(true);
+        }
+
         public void QuitMenu()
         {
             Time.timeScale = 1;
-            Application.LoadLevel("Menu");
+
+            if(DeathMenu.activeSelf == true)
+            {
+                //DeathMenu.SetActive(false);
+            }
+            SceneManager.LoadScene("Menu");
         }
     }
 }

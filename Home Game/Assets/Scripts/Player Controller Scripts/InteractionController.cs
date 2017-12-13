@@ -45,31 +45,33 @@ public class InteractionController : MonoBehaviour
 
     void CheckInput()
     {
-        //Grab and Drop Input
-        if(inputController.xButtonDown > 0)
+        if (PlayerController.instance.sceneController.Paused == false && PlayerController.instance.sceneController.Dead == false)
         {
-            //If you dont have an object, try and grab one
-            if (grabbedObject == null)
-                TryGrab();
-            //If you do have an object try and drop it
-            else
-                TryDrop();
-        }
-
-        if(inputController.glueButtonDown)
-        {
-            if(playerController.glueBerries > 0 && grabbedObject != null)
+            //Grab and Drop Input
+            if (inputController.xButtonDown > 0)
             {
-                TryGlue();
+                //If you dont have an object, try and grab one
+                if (grabbedObject == null)
+                    TryGrab();
+                //If you do have an object try and drop it
+                else
+                    TryDrop();
             }
+
+            if (inputController.glueButtonDown)
+            {
+                if (playerController.glueBerries > 0 && grabbedObject != null)
+                {
+                    TryGlue();
+                }
+            }
+
+            if (inputController.unstickButtonDown)
+            {
+                TryUnstick(grabbedObject);
+            }
+
         }
-
-        if (inputController.unstickButtonDown)
-        {
-            TryUnstick(grabbedObject);
-        }
-
-
     }
 
     void TryGlue()
