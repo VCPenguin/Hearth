@@ -41,7 +41,12 @@ public class Entity : MonoBehaviour
         GameObject entityParent = new GameObject();
         entityParent.tag = "EntityParent";
         entityParent.name = "EntityParent";
-        entityParent.transform.position = this.gameObject.transform.position;
+
+        //Change this to middle of bounds
+        Vector3 TargetPosition;
+        TargetPosition = GetComponent<Collider>().bounds.center;
+        entityParent.transform.position = TargetPosition;
+        //entityParent.transform.position = this.gameObject.transform.position;
 
         //if the original object has a rigid body, delete it
         if(GetComponent<Rigidbody>() != null)
